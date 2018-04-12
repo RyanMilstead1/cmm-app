@@ -1,0 +1,20 @@
+<%= form_for wiki do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control', placeholder: "Enter Wiki title", autofocus: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :body %>
+    <%= f.text_area :body, rows: 12, class: 'form-control', placeholder: "Enter Wiki body" %>
+  </div>
+  <% if is_authorized_to_make_private? %>
+    <div class="form-group form-check">
+      <%= f.check_box :private, class: 'form-check-input' %>
+      <%= f.label :private, class: 'form-check-label' %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.submit "Save", class: 'btn btn-success' %>
+    <%= link_to "Cancel", cancel_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>

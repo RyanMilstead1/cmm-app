@@ -1,0 +1,28 @@
+<div class="col-md-4">
+  <h4>Collaborators</h4>
+  <ul class="list-group">
+  <% wiki.collaborators.each do |collaborator| %>
+      <li class="list-group-item">
+        <%= collaborator.user.username %>
+        <% if is_authorized_to_adjust_collaborators?(wiki) %>
+          <%= link_to collaborator_path(collaborator), method: :delete, class: 'delete-btn float-right' do %>
+            <%= fa_icon('times', style: 'color: Tomato') %>
+          <% end %>
+        <% end %>
+       </li>
+  <% end %>
+  </ul>
+  <br>
+  <% if is_authorized_to_adjust_collaborators?(wiki) %>
+    <h5>Add more collaborators: </h5>
+    <%= form_for Collaborator.new, class: 'form my-2 my-lg-0' do |f| %>
+      <div class="form-group">
+        <%= text_field_tag(:q, nil, class: 'form-control mr-sm-2', placeholder: 'Username', 'data-behavior' => 'autocomplete') %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field 'wiki_id', value: wiki.id, hidden: true %>
+        <%= f.submit "Add User", class: "btn btn-outline-success my-2 my-sm-0" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

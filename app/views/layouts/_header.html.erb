@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+  <%= link_to root_path, class: "navbar-brand" do %>
+    <%= image_tag('header-img', size: '182x30', class: 'd-inline-block align-top') %> Wiki
+  <% end %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <% if current_user %>
+      <li class="nav-item">
+        <%= link_to "Wikis", wikis_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Create New Wiki", new_wiki_path, class: "nav-link" %>
+      </li>
+      <% end %>
+    </ul>
+    <div class="my-2 my-lg-0">
+      <% if current_user %>
+        <%= link_to "Account", current_user, class: 'btn btn-outline-success my-2 my-sm-0' %>
+        <%= link_to "Log Out", destroy_user_session_path, class: "btn btn-outline-success my-2 my-sm-0", method: "DELETE" %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

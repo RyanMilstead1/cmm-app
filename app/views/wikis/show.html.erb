@@ -1,0 +1,32 @@
+<h2><%= @wiki.title %></h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <%= markdown(@wiki.body) %>
+    </div>
+    <div class="col-md-4">
+      <h4>Owner: <%= @wiki.user.username %></h4>
+      <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-primary' %>
+      <% if policy(@wiki).destroy? %>
+        <a href='#' class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+          Delete
+        </a>
+      <% end %>
+      <% if @collaborators.count > 0 %>
+        <br>
+        <br>
+        <h4>Collaborators</h4>
+        <ul>
+          <% @collaborators.each do |user| %>
+            <li><%= user.username %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <%= link_to "Back to Wikis", wikis_path %>
+  </div>
+</div>
+<%= render partial: 'delete_modal', locals: {wiki: @wiki} %>

@@ -1,0 +1,47 @@
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <div class="jumbotron text-center">
+      <h1 class="display-4">Hello,
+        <%= @user.username %></h1>
+      <p class="lead">Email:
+        <%= @user.email %></p>
+      <p class="lead">Account Level:
+        <%= @user.role.capitalize %>
+        member</p>
+      <% if current_user == @user && @user.premium? %>
+        <a href='#' class="btn btn-danger btn-xs" data-toggle="modal" data-target="#exampleModal">
+          Cancel Membership
+        </a>
+        <% elsif current_user == @user && @user.standard? %>
+          <%= link_to "Upgrade Membership", new_charge_path, class: 'btn btn-primary btn-xs' %>
+        <% end %>
+        <hr class="my-4">
+        <div class="row justify-content-md-center">
+          <div class="col col-md-6">
+            <% if current_user == @user %>
+              <%= link_to "Edit", edit_user_registration_path(@user), class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cancel Membership</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure that you want to cancel your membership? All of your private wikis will be made public and you will no longer be able to make private wikis.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= link_to "SUBMIT", charge_path(current_user), class: 'btn btn-danger btn-xs', method: :delete %>
+        </div>
+      </div>
+    </div>
+  </div>
